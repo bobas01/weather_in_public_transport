@@ -1,0 +1,19 @@
+{
+  "cities": [
+    {
+      "city": "Lyon",
+      "latitude": 45.7485,
+      "longitude": 4.8467
+    },
+    {
+      "city": "Paris",
+      "latitude": 48.8566,
+      "longitude": 2.3522
+    },
+    {
+      "city": "Marseille",
+      "latitude": 43.2965,
+      "longitude": 5.3698
+    }
+  ]
+}
