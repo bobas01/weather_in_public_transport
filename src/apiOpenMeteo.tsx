@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { fetchWeatherApi } from "openmeteo";
 import config from "../config.json";
 
@@ -21,6 +22,7 @@ const params = {
   ],
   hourly: ["wind_speed_10m", "wind_direction_10m", "is_day"],
   minutely_15: "wind_speed_10m",
+  daily: ["sunrise", "sunset"],
   timezone: "Europe/London",
   forecast_days: 1,
   models: "best_match",
@@ -45,6 +47,7 @@ const longitude = response.longitude();
 const current = response.current()!;
 const minutely15 = response.minutely15()!;
 const hourly = response.hourly()!;
+const daily = response.daily()!;
 
 // Note: The order of weather variables in the URL query and the indices below need to match!
 export const weatherData = {
@@ -79,6 +82,15 @@ export const weatherData = {
     windSpeed10m: hourly.variables(0)!.valuesArray()!,
     windDirection10m: hourly.variables(1)!.valuesArray()!,
     isDay: hourly.variables(2)!.valuesArray()!,
+  },
+  daily: {
+    time: range(
+      Number(daily.time()),
+      Number(daily.timeEnd()),
+      daily.interval()
+    ).map((t) => new Date((t + utcOffsetSeconds) * 1000)),
+    sunrise: daily.variables(0)!.valuesInt64(0)!,
+    sunset: daily.variables(1)!.valuesInt64(0)!,
   },
 };
 

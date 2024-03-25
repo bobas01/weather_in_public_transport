@@ -18,10 +18,11 @@ body {
   display: flex;
   justify-content: space-evenly;
   background-color: #fefeff;
-  width: 270px;
-  margin: 0 20px;
+  width: 250px;
+  margin: 10px 20px;
   border-radius: 15px;
   align-items: center;
+  height: 250px;
 
   img {
     width: 100px;
@@ -39,6 +40,7 @@ body {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
+  height: 610px;
 
   #firstPartContainer {
     background-color: #fefeff;
@@ -54,9 +56,15 @@ body {
       padding: 10px 0;
     }
 
+
     h2 {
-      font-size: 1.5rem;
+      font-size: 3rem;
       margin: 0 auto;
+
+    }
+
+    img {
+      height: 250px;
     }
 
     p {
@@ -87,10 +95,15 @@ body {
       h4 {
         text-transform: capitalize;
       }
+
+      div>div {
+        font-weight: 700;
+      }
     }
 
     #infoSecondPartContainer {
       display: flex;
+      flex-wrap: wrap;
       height: 200px;
     }
   }

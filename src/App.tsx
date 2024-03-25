@@ -1,19 +1,21 @@
 import "./App.scss";
-import { weatherData } from "./apiOpenMeteo";
-import { cityData } from "./apiOpenMeteo";
-import React, { useState, useEffect } from "react";
+import { weatherData, cityData } from "./apiOpenMeteo";
+import { useState, useEffect } from "react";
+
+const refreshAppHour = () => {
+  setInterval(() => {
+    location.reload();
+  }, 3600000);
+};
 
 function Clock() {
   const [currentTime, setCurrentTime] = useState(new Date());
 
   useEffect(() => {
-    const timer = setInterval(() => {
+    setInterval(() => {
       setCurrentTime(new Date());
     }, 1000);
-
-    return () => {
-      clearInterval(timer);
-    };
+    refreshAppHour();
   }, []);
 
   const formatTime = (time: Date) => {
@@ -70,6 +72,23 @@ function App() {
   const apparentTemperature = Math.round(
     weatherData.current.apparentTemperature
   );
+
+  const sunriseString = weatherData.daily.sunrise.toString();
+  const sunsetString = weatherData.daily.sunset.toString();
+  const sunriseMilliseconds = Number(sunriseString) * 1000;
+  const sunsetMilliseconds = Number(sunsetString) * 1000;
+
+  const sunriseDate = new Date(sunriseMilliseconds);
+  const sunsetDate = new Date(sunsetMilliseconds);
+  const sunriseFormatted = sunriseDate.toLocaleString("fr-FR", {
+    hour: "numeric",
+    minute: "numeric",
+  });
+
+  const sunsetFormatted = sunsetDate.toLocaleString("fr-FR", {
+    hour: "numeric",
+    minute: "numeric",
+  });
 
   return (
     <>
@@ -137,15 +156,38 @@ function App() {
           <div id="infoSecondPartContainer">
             <div className="litleContainer ">
               <img src="../public/iconWeather/humidity.png" alt="humidity" />
-              <h2>{relativeHumidity2m} %</h2>
+              <div>
+                <p>Humidité</p>
+                <h2>{relativeHumidity2m} %</h2>
+              </div>
             </div>
             <div className="litleContainer ">
               <img src="../public/iconWeather/wind.png" alt="wind" />
-              <h2>{windSpeed} km/h</h2>
+              <div>
+                <p>Vitesse du vent</p>
+                <h2>{windSpeed} km/h</h2>
+              </div>
             </div>
             <div className="litleContainer">
               <img src="../public/iconWeather/wind_rose.png" alt="wind_rose" />
-              <h2>{getWindDirectionAbbreviation(windDirection)}</h2>
+              <div>
+                <p>Direction du vent</p>
+                <h2>{getWindDirectionAbbreviation(windDirection)}</h2>
+              </div>
+            </div>
+            <div className="litleContainer">
+              <img src="../public/iconWeather/sunrise.png" alt="sunrise" />
+              <div>
+                <p>Lever du soleil</p>
+                <h2> {sunriseFormatted}</h2>
+              </div>
+            </div>
+            <div className="litleContainer">
+              <img src="../public/iconWeather/sunset.png" alt="sunset" />
+              <div>
+                <p>Coucher du soleil</p>
+                <h2>{sunsetFormatted}</h2>
+              </div>
             </div>
           </div>
         </div>
